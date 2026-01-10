@@ -1,0 +1,17 @@
+# CCDA Shared Library Requirements
+# Core dependencies for shared utilities, models, and database operations
+
+# Cloud Storage
+boto3>=1.34.0                # AWS/DigitalOcean Spaces client
+
+# Database
+asyncpg>=0.29.0              # Async PostgreSQL driver
+
+# Data Models & Validation
+pydantic>=2.5.0              # Data validation and serialization
+
+# Security Scoring
+cvss>=3.0                    # CVSS v2/v3/v4 score calculation
+
+# Optional: Only needed if using pandas integration
+# pandas>=2.1.0              # Data analysis (optional for query_df)
