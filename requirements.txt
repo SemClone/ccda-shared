@@ -13,5 +13,11 @@ pydantic>=2.5.0              # Data validation and serialization
 # Security Scoring
 cvss>=3.0                    # CVSS v2/v3/v4 score calculation
 
+# Content Extraction (Phase 6 - Media Monitoring)
+beautifulsoup4>=4.12.0       # HTML parsing
+html2text>=2020.1.16         # HTML to plain text conversion
+lxml>=4.9.0                  # Fast XML/HTML parser
+readability-lxml>=0.8.1      # Article content extraction
+
 # Optional: Only needed if using pandas integration
 # pandas>=2.1.0              # Data analysis (optional for query_df)
