@@ -1,5 +1,5 @@
 -- ============================================================
--- Migration 012: AI Processing Fields for Media Intelligence
+-- Migration 013: AI Processing Fields for Media Intelligence
 -- ============================================================
 -- Purpose: Add columns for AI-powered supply chain intelligence extraction
 -- Phase: Phase 6.5 - AI Processing Pipeline
