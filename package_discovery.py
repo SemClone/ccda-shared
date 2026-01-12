@@ -143,6 +143,21 @@ class PackageDiscoveryService:
                 metadata.repo_url = f"https://github.com/{metadata.name}"
                 logger.info(f"Extracted GitHub repo URL from PURL: {metadata.repo_url}")
 
+                # Try to get latest release from GitHub API
+                try:
+                    import httpx
+                    async with httpx.AsyncClient(timeout=5.0) as client:
+                        api_url = f"https://api.github.com/repos/{metadata.name}/releases/latest"
+                        response = await client.get(api_url)
+                        if response.status_code == 200:
+                            release_data = response.json()
+                            tag_name = release_data.get("tag_name", "")
+                            # Remove 'v' prefix if present (e.g., v1.14.3 -> 1.14.3)
+                            metadata.latest_version = tag_name.lstrip("v") if tag_name else None
+                            logger.info(f"Got latest GitHub release: {metadata.latest_version}")
+                except Exception as e:
+                    logger.debug(f"Could not fetch GitHub latest release: {e}")
+
         # Special handling for Go packages - name often contains GitHub URL
         if metadata.ecosystem in ["golang", "go"]:
             if metadata.name.startswith("github.com/"):
