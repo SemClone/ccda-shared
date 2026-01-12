@@ -303,8 +303,8 @@ class PackageDiscoveryService:
 
             # Get latest version
             if "versions" in data and data["versions"]:
-                # Versions are sorted by release time (newest first)
-                result.latest_version = data["versions"][0]["versionKey"]["version"]
+                # Versions are sorted by release time (oldest first), so take the last one
+                result.latest_version = data["versions"][-1]["versionKey"]["version"]
 
             # Get version-specific metadata
             version_url = f"{url}/versions/{quote(metadata.version or result.latest_version or '', safe='')}"
