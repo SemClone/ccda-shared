@@ -136,6 +136,21 @@ class PackageDiscoveryService:
 
         logger.info(f"Discovering metadata for {metadata.ecosystem}/{metadata.name}")
 
+        # Special handling for Go packages - name often contains GitHub URL
+        if metadata.ecosystem in ["golang", "go"]:
+            if metadata.name.startswith("github.com/"):
+                # Extract GitHub URL directly from package name
+                # e.g., github.com/gorilla/mux -> https://github.com/gorilla/mux
+                parts = metadata.name.split("/")
+                if len(parts) >= 3:  # github.com/owner/repo
+                    metadata.repo_url = f"https://{'/'.join(parts[:3])}"
+                    logger.info(f"Extracted repo URL from Go package name: {metadata.repo_url}")
+            elif metadata.name.startswith("gitlab.com/"):
+                parts = metadata.name.split("/")
+                if len(parts) >= 3:
+                    metadata.repo_url = f"https://{'/'.join(parts[:3])}"
+                    logger.info(f"Extracted repo URL from Go package name: {metadata.repo_url}")
+
         # Try data sources in priority order
         sources = [
             ("deps.dev", self._fetch_deps_dev),
