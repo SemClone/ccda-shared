@@ -115,18 +115,19 @@ class PackageDiscoveryService:
         """
         self.serpapi_key = serpapi_key
 
-    async def discover(self, purl: str) -> PackageMetadata:
+    async def discover(self, purl: str, allow_partial: bool = False) -> PackageMetadata:
         """
         Discover metadata for a package URL.
 
         Args:
             purl: Package URL (e.g., pkg:npm/express@4.18.0)
+            allow_partial: If True, return partial metadata without raising errors
 
         Returns:
             PackageMetadata with enriched data from discovery sources
 
         Raises:
-            ValueError: If PURL is invalid or no metadata found
+            ValueError: If PURL is invalid or no metadata found (unless allow_partial=True)
         """
         metadata = PackageMetadata(purl)
 
@@ -203,8 +204,8 @@ class PackageDiscoveryService:
                 logger.warning(f"{source_name} failed: {e}")
                 continue
 
-        # Check if we got enough data
-        if not metadata.is_complete:
+        # Check if we got enough data (skip validation if allow_partial=True)
+        if not allow_partial and not metadata.is_complete:
             missing = []
             if not metadata.ecosystem:
                 missing.append("ecosystem")
