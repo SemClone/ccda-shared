@@ -136,6 +136,13 @@ class PackageDiscoveryService:
 
         logger.info(f"Discovering metadata for {metadata.ecosystem}/{metadata.name}")
 
+        # Special handling for GitHub packages - extract URL from PURL
+        if metadata.ecosystem == "github":
+            # pkg:github/owner/repo -> https://github.com/owner/repo
+            if metadata.name and "/" in metadata.name:
+                metadata.repo_url = f"https://github.com/{metadata.name}"
+                logger.info(f"Extracted GitHub repo URL from PURL: {metadata.repo_url}")
+
         # Special handling for Go packages - name often contains GitHub URL
         if metadata.ecosystem in ["golang", "go"]:
             if metadata.name.startswith("github.com/"):
