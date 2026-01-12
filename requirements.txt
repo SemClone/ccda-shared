@@ -10,6 +10,9 @@ asyncpg>=0.29.0              # Async PostgreSQL driver
 # Data Models & Validation
 pydantic>=2.5.0              # Data validation and serialization
 
+# HTTP Client (Phase 3 - Package Discovery)
+httpx>=0.25.0                # Async HTTP client for API calls
+
 # Security Scoring
 cvss>=3.0                    # CVSS v2/v3/v4 score calculation
 
