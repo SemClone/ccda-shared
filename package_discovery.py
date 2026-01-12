@@ -268,8 +268,14 @@ class PackageDiscoveryService:
             logger.debug(f"deps.dev doesn't support {metadata.ecosystem}")
             return None
 
+        # Maven packages need groupId:artifactId format for deps.dev
+        # PURL uses / separator, but Maven Central uses :
+        package_name = metadata.name
+        if metadata.ecosystem == "maven":
+            package_name = metadata.name.replace("/", ":")
+
         # Encode package name for URL
-        encoded_name = quote(metadata.name, safe="")
+        encoded_name = quote(package_name, safe="")
 
         # Get package info
         url = f"https://api.deps.dev/v3/systems/{system}/packages/{encoded_name}"
