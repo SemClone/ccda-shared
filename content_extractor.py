@@ -148,6 +148,16 @@ class ContentExtractor:
                 result["status_code"] = response.status_code
 
                 if response.status_code == 200:
+                    # Check Content-Type header to avoid processing non-HTML content
+                    content_type = response.headers.get('content-type', '').lower()
+
+                    # Only process HTML/XHTML content
+                    if not content_type.startswith(('text/html', 'application/xhtml')):
+                        result["error"] = f"Unsupported content type: {content_type}"
+                        # For PDFs and other binary formats, we could add specialized handling here
+                        # For now, we skip content extraction
+                        return result
+
                     html_content = response.text
                     extraction = self.extract_from_html(html_content, base_url=url)
                     result.update(extraction)
