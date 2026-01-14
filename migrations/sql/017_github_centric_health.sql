@@ -141,6 +141,7 @@ WHERE tp.repo_url = gp.repo_url
 -- Step 6: Migrate existing health data to github_project_health_history
 -- Takes the most recent health scan for each package and stores it in the new table
 -- This preserves historical data during migration
+-- Note: Only migrates columns that exist in package_health_scores (Migration 014)
 INSERT INTO github_project_health_history (
     github_project_id,
     analysis_data,
@@ -152,8 +153,6 @@ INSERT INTO github_project_health_history (
     open_issues,
     commits_last_month,
     contributors_count,
-    bus_factor,
-    pony_factor,
     issue_response_time_hours,
     pr_merge_time_hours,
     burnout_score,
@@ -170,8 +169,6 @@ SELECT
     phs.open_issues,
     phs.commits_last_month,
     phs.contributors_count,
-    phs.bus_factor,
-    phs.pony_factor,
     phs.issue_response_time_hours,
     phs.pr_merge_time_hours,
     phs.burnout_score,
@@ -189,6 +186,7 @@ ON CONFLICT DO NOTHING;
 
 -- Step 7: Update github_projects with latest health metrics
 -- Populates the denormalized health fields from the most recent scan
+-- Note: Only updates columns that were migrated in Step 6
 UPDATE github_projects gp
 SET
     health_score = latest.health_score,
@@ -199,8 +197,6 @@ SET
     open_issues = latest.open_issues,
     commits_last_month = latest.commits_last_month,
     contributors_count = latest.contributors_count,
-    bus_factor = latest.bus_factor,
-    pony_factor = latest.pony_factor,
     issue_response_time_hours = latest.issue_response_time_hours,
     pr_merge_time_hours = latest.pr_merge_time_hours,
     burnout_score = latest.burnout_score,
@@ -217,8 +213,6 @@ FROM (
         open_issues,
         commits_last_month,
         contributors_count,
-        bus_factor,
-        pony_factor,
         issue_response_time_hours,
         pr_merge_time_hours,
         burnout_score,
