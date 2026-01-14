@@ -7,14 +7,16 @@ Components:
 - storage: SpacesClient for DigitalOcean Spaces operations
 - models: Pydantic data models for validation and serialization
 - constants: Centralized constants and configuration values
+- vulnerability_matcher: VulnerabilityMatcher for package-vulnerability linking
 
 Usage:
     from shared.storage import SpacesClient
     from shared.models import Vulnerability, Package, MediaItem
     from shared.constants import SPACES_PATH_DUCKDB, HEALTH_GRADE_A_MIN
+    from shared.vulnerability_matcher import VulnerabilityMatcher
 """
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __author__ = "CCDA Team"
 
 # Import commonly used classes for convenience
@@ -29,6 +31,7 @@ from .models import (
     PackageAnalysisResult,
 )
 from .constants import CCDA_VERSION
+from .vulnerability_matcher import VulnerabilityMatcher
 
 __all__ = [
     "get_env_value",
@@ -41,4 +44,5 @@ __all__ = [
     "HealthMetrics",
     "PackageAnalysisResult",
     "CCDA_VERSION",
+    "VulnerabilityMatcher",
 ]
