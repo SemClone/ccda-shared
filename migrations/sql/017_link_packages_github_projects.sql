@@ -9,13 +9,13 @@ ADD COLUMN IF NOT EXISTS github_project_id INTEGER REFERENCES github_projects(id
 -- Create index for faster lookups
 CREATE INDEX IF NOT EXISTS idx_packages_github_project_id ON packages(github_project_id);
 
--- Link existing packages to github_projects based on repo_url
+-- Link existing packages to github_projects based on repository_url
 UPDATE packages p
 SET github_project_id = gp.id
 FROM github_projects gp
-WHERE p.repo_url IS NOT NULL 
-  AND p.repo_url != ''
-  AND gp.repo_url = p.repo_url
+WHERE p.repository_url IS NOT NULL
+  AND p.repository_url != ''
+  AND gp.repo_url = p.repository_url
   AND p.github_project_id IS NULL;
 
 -- Add comment
