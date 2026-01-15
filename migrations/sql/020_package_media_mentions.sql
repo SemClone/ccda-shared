@@ -52,7 +52,7 @@ SELECT
     COUNT(DISTINCT CASE WHEN m.sentiment = 'positive' THEN pmm.media_item_id END) AS positive_mentions,
     COUNT(DISTINCT CASE WHEN m.sentiment = 'neutral' THEN pmm.media_item_id END) AS neutral_mentions,
     COUNT(DISTINCT CASE WHEN m.risk_score >= 70 THEN pmm.media_item_id END) AS high_risk_mentions,
-    MAX(m.published_at) AS latest_mention_date,
+    MAX(m.published) AS latest_mention_date,
     AVG(m.risk_score) AS avg_risk_score,
     AVG(pmm.confidence) AS avg_match_confidence
 FROM tracked_packages p
