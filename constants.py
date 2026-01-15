@@ -14,7 +14,6 @@ ENV_BLUESKY_USERNAME = "BLUESKY_USERNAME"
 ENV_BLUESKY_PASSWORD = "BLUESKY_PASSWORD"
 ENV_API_URL = "API_URL"
 ENV_CACHE_TTL = "CACHE_TTL"
-ENV_DUCKDB_PATH = "DUCKDB_PATH"
 
 # Default Values
 DEFAULT_SPACES_REGION = "sfo3"
@@ -25,22 +24,7 @@ DEFAULT_DASHBOARD_PORT = 5000
 DEFAULT_WORKER_PORT = 8080
 
 # Spaces File Paths
-SPACES_PATH_DUCKDB = "data/ccda.duckdb"
-SPACES_PATH_DEMO_STATUS = "demo/status.json"
-SPACES_PATH_WORKER_STATUS = "worker/status.json"
-SPACES_PATH_JOBS_QUEUE = "queue/jobs.json"
-SPACES_PATH_JOBS_EXECUTIONS = "queue/executions/"
-SPACES_PATH_WORKER_ERRORS = "worker/errors.json"
-SPACES_PATH_MEDIA = "media/"
-SPACES_PATH_PACKAGES = "packages/"
-SPACES_PATH_VULNERABILITIES = "vulnerabilities/"
-SPACES_PATH_ANALYSIS = "analysis/"
-
-# Database Tables
-TABLE_VULNERABILITIES = "vulnerabilities"
-TABLE_PACKAGES = "packages"
-TABLE_MEDIA = "media"
-TABLE_JOBS = "jobs"
+SPACES_PATH_WORKER_STATUS = "worker/status.json"  # Still used for legacy heartbeat
 
 # API Endpoints (relative paths)
 API_PATH_HEALTH = "/health"
@@ -202,10 +186,6 @@ SUPPORTED_ECOSYSTEMS = [
 
 # PURL Prefixes
 PURL_PREFIX = "pkg:"
-
-# Database File Sizes (for monitoring)
-DUCKDB_MAX_SIZE_GB = 10
-DUCKDB_WARNING_SIZE_GB = 8
 
 # Worker Configuration
 WORKER_HEARTBEAT_INTERVAL = 60  # seconds
